@@ -95,7 +95,56 @@ app.post('/login', (req, res) => {
   });
 });
 
-// Пример защищенного маршрута
+// Добавить лайк
+app.post('/like', (req, res) => {
+  const { userId, flowerId } = req.body;
+  
+  const query = 'INSERT INTO user_likes (user_id, flower_id) VALUES (?, ?)';
+  connection.query(query, [userId, flowerId], (err, results) => {
+    if (err) {
+      console.error('Error liking flower: ', err);
+      res.status(500).send('Error liking flower');
+      return;
+    }
+    res.status(201).send('Flower liked successfully');
+  });
+});
+
+// Удаление лайка
+app.post('/unlike', (req, res) => {
+  const { userId, flowerId } = req.body;
+  
+  const query = 'DELETE FROM user_likes WHERE user_id = ? AND flower_id = ?';
+  connection.query(query, [userId, flowerId], (err, results) => {
+    if (err) {
+      console.error('Error unliking flower: ', err);
+      res.status(500).send('Error unliking flower');
+      return;
+    }
+    res.status(200).send('Flower unliked successfully');
+  });
+});
+
+// Получение лайков пользователя
+app.get('/user_likes/:userId', (req, res) => {
+  const { userId } = req.params;
+  
+  const query = `
+    SELECT flower_id 
+    FROM like_flowers 
+    WHERE user_id = ?
+  `;
+  connection.query(query, [userId], (err, results) => {
+    if (err) {
+      console.error('Error fetching user likes: ', err);
+      res.status(500).send('Error fetching user likes');
+      return;
+    }
+    res.json(results.map(row => row.flower_id));
+  });
+});
+
+// Получение цветов
 app.get('/flowers', (req, res) => {
   const query = 'SELECT * FROM flowers';
   connection.query(query, (err, results) => {
