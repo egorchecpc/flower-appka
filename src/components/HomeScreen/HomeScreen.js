@@ -9,7 +9,7 @@ import Card from '../Card';
 
 
 
-const HomeScreen = ({navigation, flowers, likeFlower, changeCartStatus}) => {
+const HomeScreen = ({navigation, flowers, likeFlower, changeCartStatus, userId}) => {
 
   const [categoryIndex, setCategoryIndex] = useState(0);
   const [flowersData, setFlowers] = useState(flowers);
@@ -63,7 +63,7 @@ const HomeScreen = ({navigation, flowers, likeFlower, changeCartStatus}) => {
           <Text style={{fontSize:25, fontWeight:'bold'}}>Welcome to</Text>
           <Text style={{fontSize: 38, fontWeight:'bold', color: colors.orange}}>Flower App</Text>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate('Cart') }>
+        <TouchableOpacity onPress={() => navigation.navigate('Cart', {userId}) }>
           <MaterialIcons name="shopping-cart" size={30} />
         </TouchableOpacity>
       </View>

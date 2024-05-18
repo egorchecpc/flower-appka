@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import colors from '../helpers/colors';
 
 const Card = ({ flower, navigation, likeFlower, changeCartStatus }) => {
-    flower = flower.item
+    flower = flower.item;
     return (
         <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Details', { flower })}>
             <Image source={{ uri: flower.img }} style={styles.image} />
@@ -20,6 +20,7 @@ const Card = ({ flower, navigation, likeFlower, changeCartStatus }) => {
         </TouchableOpacity>
     );
 }
+
 
 const styles = StyleSheet.create({
     card: {

@@ -8,15 +8,7 @@ import { useState, useEffect } from 'react';
 
 
 const CartScreen = ({navigation, flowers, changeCartStatus}) => {
-  // const [flowersData, setFlowersData] = useState([]);
-  // useEffect(() => {
-  //   fetch('http://192.168.0.101:3001/flowers')
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       setFlowersData(data);
-  //     })
-  //     .catch(error => console.error('Error fetching flowers: ', error));
-  // }, []);
+  
   const [cartFlowers,setCartFlowers] = useState(flowers);
   const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {

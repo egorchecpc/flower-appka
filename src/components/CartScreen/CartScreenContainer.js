@@ -2,9 +2,11 @@ import {connect} from "react-redux";
 import CartScreen from "./CartScreen";
 import { likeFlower, changeCartStatus } from "../../redux/mainReducer";
 
-const CartScreenContainer = ({flowers, navigation, changeCartStatus}) => {
+const CartScreenContainer = ({route, flowers, navigation, changeCartStatus}) => {
+    
+    userId = route.params.userId;
     return (
-        <CartScreen flowers={flowers} navigation={navigation} changeCartStatus={changeCartStatus}/>
+        <CartScreen flowers={flowers} navigation={navigation}  changeCartStatus={(id) => changeCartStatus(id, userId)}/>
     )
 }
 
@@ -17,9 +19,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 
     return {
-        changeCartStatus: (id) => {
+        changeCartStatus: (id, userId) => {
             console.log('change in Cart container')
-            let action = changeCartStatus(id);
+            let action = changeCartStatus(id, userId);
             dispatch(action)
         }
     }

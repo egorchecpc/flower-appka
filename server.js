@@ -131,13 +131,62 @@ app.get('/user_likes/:userId', (req, res) => {
   
   const query = `
     SELECT flower_id 
-    FROM like_flowers 
+    FROM user_likes
     WHERE user_id = ?
   `;
   connection.query(query, [userId], (err, results) => {
     if (err) {
       console.error('Error fetching user likes: ', err);
       res.status(500).send('Error fetching user likes');
+      return;
+    }
+    res.json(results.map(row => row.flower_id));
+  });
+});
+
+// Добавить в корзину
+app.post('/add_to_cart', (req, res) => {
+  const { userId, flowerId } = req.body;
+  
+  const query = 'INSERT INTO user_cart (user_id, flower_id) VALUES (?, ?)';
+  connection.query(query, [userId, flowerId], (err, results) => {
+    if (err) {
+      console.error('Error add flower to cart: ', err);
+      res.status(500).send('Error add flower to cart');
+      return;
+    }
+    res.status(201).send('Add to cart successfully');
+  });
+});
+
+// Удаление из корзины
+app.post('/delete_from_cart', (req, res) => {
+  const { userId, flowerId } = req.body;
+  
+  const query = 'DELETE FROM user_cart WHERE user_id = ? AND flower_id = ?';
+  connection.query(query, [userId, flowerId], (err, results) => {
+    if (err) {
+      console.error('Error remove from cart: ', err);
+      res.status(500).send('Error remove from cart');
+      return;
+    }
+    res.status(200).send('Remove from cart successfully');
+  });
+});
+
+// Получение корзины пользователя
+app.get('/get_cart/:userId', (req, res) => {
+  const { userId } = req.params;
+  
+  const query = `
+    SELECT flower_id 
+    FROM user_cart
+    WHERE user_id = ?
+  `;
+  connection.query(query, [userId], (err, results) => {
+    if (err) {
+      console.error('Error fetching user cart: ', err);
+      res.status(500).send('Error fetching user cart');
       return;
     }
     res.json(results.map(row => row.flower_id));

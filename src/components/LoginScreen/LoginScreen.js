@@ -16,7 +16,7 @@ const LoginScreen = ({ navigation }) => {
       // await AsyncStorage.setItem('token', token);
 
       Alert.alert('Успех', 'Вы вошли в систему!');
-      navigation.navigate('Home');
+      navigation.navigate('Home', { token });
     } catch (error) {
       console.error('Error logging in:', error.response ? error.response.data : error.message);
       Alert.alert('Ошибка', 'Неверный email или пароль.');
