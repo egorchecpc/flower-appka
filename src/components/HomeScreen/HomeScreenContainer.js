@@ -6,11 +6,10 @@ import { likeFlower, changeCartStatus, fetchFlowers } from "../../redux/mainRedu
 
 const HomeScreenContainer = ({ route, flowers, navigation, likeFlower, changeCartStatus, fetchFlowers }) => {
     
-    const { token } = route.params;
-    let userId;
-    userId = 3;
+    const userId=route.params.token2.userId
+    console.log(route.params)
     useEffect(() => {
-        fetchFlowers(userId); // вызываем функцию для получения данных из API при монтировании компонента
+        fetchFlowers(userId);
     }, [fetchFlowers, userId]);
     console.log('Тестовый запрос будет с user_id:',userId)
     return (

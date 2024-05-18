@@ -75,7 +75,7 @@ app.post('/login', (req, res) => {
     }
 
     const user = results[0];
-
+    const userId = user.id
     bcrypt.compare(password, user.password, (err, isMatch) => {
       if (err) {
         console.error('Error comparing passwords: ', err);
@@ -90,7 +90,8 @@ app.post('/login', (req, res) => {
       }
 
       const token = jwt.sign({ id: user.id }, jwtSecret, { expiresIn: '1h' });
-      res.json({ token });
+      const token2 = {userId:user.id}
+      res.json({ token2 });
     });
   });
 });
